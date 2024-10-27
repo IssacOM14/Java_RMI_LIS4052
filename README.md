@@ -1,4 +1,4 @@
-Compila todos los archivos nuevamente:
+Compila todos los archivos:
 
 javac *.java
 
