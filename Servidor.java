@@ -1,17 +1,17 @@
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
+package subasta;
+
+import io.grpc.Server;
+import io.grpc.ServerBuilder;
 
 public class Servidor {
-    public static void main(String[] args) {
-        try {
-            SubastaImpl subasta = new SubastaImpl();
-            Registry registry = LocateRegistry.createRegistry(1099);
-            registry.rebind("Subasta", subasta);
-            System.out.println("Servidor de subastas listo en el puerto 1099...");
-        } catch (Exception e) {
-            System.err.println("Error en el servidor: " + e.getMessage());
-            e.printStackTrace();
-        }
+    public static void main(String[] args) throws Exception {
+        Server server = ServerBuilder.forPort(9090)
+            .addService(new SubastaGrpcImpl())
+            .build()
+            .start();
+
+        System.out.println("Servidor gRPC iniciado en el puerto 9090...");
+        server.awaitTermination();
     }
 }
 
